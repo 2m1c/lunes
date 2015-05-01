@@ -1,0 +1,47 @@
+/* ========================= font-face ========================= */
+@font-face
+{
+font-family: helveticaLight;
+src: url('../fonts/helveticaneue_light-webfont.ttf');
+}
+
+@font-face
+{
+font-family: helveticaBold;
+src: url('../fonts/HelveticaNeueLTPro-Bd.otf');
+}
+
+@font-face
+{
+font-family: helveticaCondensedBlack;
+src: url('../fonts/helveticaneue_condensedblack-webfont.ttf');
+}
+
+@font-face
+{
+font-family: helveticaCondensedBold;
+src: url('../fonts/helveticaneue_condensedbold-webfont.ttf');
+}
+
+@font-face
+{
+font-family: helveticaMd;
+src: url('../fonts/HelveticaNeueLTPro-Md.otf');
+}
+
+/* ============================ global ============================ */
+.marginTop10 { margin-top: 10px; }
+.marginTop15 { margin-top: 15px; }
+.marginTop20 { margin-top: 20px; }
+.marginTop30 { margin-top: 30px; }
+.marginTop35 { margin-top: 35px; }
+.marginTop40 { margin-top: 40px; }
+.marginTop50 { margin-top: 50px; }
+
+.marginBottom10 { margin-bottom: 10px; }
+.marginBottom15 { margin-bottom: 15px; }
+.marginBottom20 { margin-bottom: 20px; }
+.marginBottom30 { margin-bottom: 30px; }
+.marginBottom35 { margin-bottom: 35px; }
+.marginBottom40 { margin-bottom: 40px; }
+.marginBottom50 { margin-bottom: 50px; }

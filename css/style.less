@@ -1,0 +1,957 @@
+@bg-color-dark 	: #2e2e2e;
+@bg-color-light : #fff;
+@bg-color-fade 	: #a6abb1;
+@bg-color-theme	: #20A393;
+
+
+@font-color-dark	: #2e2e2e;
+@font-color-light	: #fff;
+@font-color-fade 	: #a6abb1;
+@font-color-theme	: #20A393;
+
+
+
+.btn-theme {
+	background: @bg-color-light;
+	color: @font-color-dark;
+	outline: none;
+	border: none;
+}
+
+.btn-theme:hover {
+	background: @bg-color-theme;
+	border: 1px solid #000;
+	color: @font-color-light;
+}
+
+.btn-follow {
+	background: @bg-color-light;
+	color: @font-color-dark;
+}
+
+.btn-unfollow {
+	background: red;
+	color: @font-color-light;
+}
+
+/* ============================ general ============================ */
+body.loginPage {
+	background: url('../img/background.jpg') repeat;
+	font-family: helveticaMd;
+}
+
+.clear {
+	clear: both;
+}
+
+a {
+	text-decoration: none;
+}
+
+header.wall .userInfo a,
+.issuePanelWrapper .issuePanel a.posterName,
+.profile .profileFields .profileFollowField,
+.issuePanelWrapper .commentBoxList .link2oldComments,
+.issuePanelWrapper .commentBoxList .commentBox .commentStar i {
+	transition-duration: .3s;
+	-ms-transition-duration: .3s;
+	-o-transition-duration: .3s;
+	-moz-transition-duration: .3s;
+	-webkit-transition-duration: .3s;
+}
+
+.styled-file-btn {
+	position: absolute;
+	cursor: pointer;
+	opacity: 0;
+	bottom: 0px;
+	
+}
+
+.postPanel .styled-file-btn {
+	width: 97px;
+	height: 34px;
+}
+
+.js-display-option {
+  text-transform: capitalize;
+}
+
+*::-webkit-input-placeholder { font-family: helveticaLight; font-size: 12px; letter-spacing: 1px; }
+
+*:-moz-placeholder { font-family: helveticaLight; font-size: 12px; letter-spacing: 1px; }
+
+*::-moz-placeholder { font-family: helveticaLight; font-size: 12px; letter-spacing: 1px; }
+
+*:-ms-input-placeholder { font-family: helveticaLight; font-size: 12px; letter-spacing: 1px; }
+
+
+/* ============================ tooltip ============================ */
+.infotipBox {
+	background: @bg-color-dark;
+	border-radius: 6px;
+	color: @font-color-light;
+	display: inline;
+	font-family: helveticaLight;
+	font-weight: 300;
+	max-width: 200px;
+	padding: 5px 10px;
+	position: absolute;
+	text-align: center;
+	z-index: 9999;
+	-webkit-box-shadow: 0 1px 5px 0 #2e2e2e;
+	box-shadow: 0 1px 5px 0 #2e2e2e;
+}
+
+/* ============================ header ============================ */
+/*login*/
+header.login {
+	background: @bg-color-theme;
+	border-bottom: 1px solid @bg-color-dark;
+	-webkit-box-shadow: 0 1px 5px 0 @bg-color-dark;
+	box-shadow: 0 1px 5px 0 @bg-color-dark;
+}
+
+header.login .logo {
+	padding: 0px;
+}
+
+header.login .logo i,
+header.login .logo span {
+	color: @font-color-light;
+	font-size: 64px;
+}
+
+header.login .logo span { font-family: helveticaBold; }
+
+header.login label {
+	color: @font-color-light;
+	font-family: helveticaLight; 
+}
+
+header.login .forgot_password {
+  float: right;
+  font-size: 12px;
+  margin-top: -12px;
+  color: @font-color-dark;
+}
+
+/*wall*/
+header.wall {
+	background: @bg-color-theme;
+	-webkit-box-shadow: 0 1px 5px 0 @bg-color-dark;
+	box-shadow: 0 1px 5px 0 @bg-color-dark;
+	padding: 10px 0px 0px 0px;
+	position: fixed;
+	width: 100%;
+	top: 0px; left: 0px;
+	z-index: 9999;
+}
+
+header.wall .logo {
+	margin-top: 5px;
+	width: 3.333% !important;
+}
+
+header.wall .logo i {
+	color: @font-color-light;
+	font-size: 24px;
+}
+
+header.wall .search i {
+	color: @font-color-theme;
+	position: absolute;
+	top: 10px;
+	right: 30px;
+}
+
+header.wall .search .headerSearchResult {
+	background: #20a393;
+	-webkit-box-shadow: 0 1px 5px 0 #2e2e2e;
+	box-shadow: 0 1px 5px 0 #2e2e2e;
+	position: absolute;
+	padding: 0px 10px;
+	width: 93%;
+	top: 50px;
+}
+
+header.wall .search .headerSearchResult a {
+	border-bottom: 1px solid @bg-color-light;
+	color: @font-color-light;
+	display: block;
+	font-family: helveticaLight;
+	letter-space: 1px;
+	padding: 10px 0px;
+}
+
+header.wall .search .headerSearchResult a:last-child {
+	border-bottom: none;
+}
+
+header.wall .userInfo { 
+	margin-top: -5px; 
+	float: right;
+}
+
+header.wall .userInfo a {
+	color: @font-color-light;
+	float: right;
+	font-size: 28px;
+	letter-spacing: 2px;
+}
+
+header.wall .userInfo a img {
+	height: 32px;
+	width: 32px;
+}
+
+header.wall .userInfo a span { margin-left: 6px; }
+
+header.wall .userInfo a:hover { color: @font-color-dark; }
+
+header.wall .userInfo a.action{
+	border: 2px solid #ffffff;
+	border-radius: 50%;
+	color: #ffffff;
+	font-size: 16px;
+	height: 32px;
+	line-height: 30px;
+	width: 32px;
+	text-align: center;
+	float: right;
+	margin-top: 7px;
+	margin-left: 12px;
+}
+
+header.wall .userInfo a.action:hover {
+	color: @font-color-dark;
+	background-color: @bg-color-light;
+}
+
+header.wall .notificationList {
+	display: none;
+	background: @bg-color-theme;
+	position: absolute;
+	height: auto; width: 300px;
+	padding: 20px;
+	top: 60px; right: 18%;
+	-webkit-box-shadow: 0 1px 5px 0 @bg-color-dark;
+	box-shadow: 0 1px 5px 0 @bg-color-dark;
+}
+
+header.wall .notificationList a {
+	border-bottom: 1px solid @bg-color-light;
+	color: @font-color-light;
+	display: block;
+	font-family: helveticaLight;
+	letter-space: 1px;
+	padding: 10px 0px;
+}
+
+header.wall .notificationList a span.poster {
+	color: @font-color-dark;
+}
+
+header.wall .notificationList a span.postName {
+}
+
+header.wall .notificationList a span.postTime {
+	color: @font-color-dark;
+	font-size: 10px;
+	float: right;
+}
+
+header.wall .notificationList a.showAll {
+	border-bottom: none;
+	font-size: 12px;
+	padding: 10px 0px 0px 0px;
+	text-align: center;
+}
+
+/* ============================ footer ============================ */
+footer.footer {
+    border-top: 1px solid @bg-color-dark;
+    margin-top: 20px;
+    padding: 10px 10px;
+}
+
+footer.footer .contact {
+  color: @font-color-dark;
+  float: right;
+}
+
+/* ============================ login & signup page ============================ */
+.login_bg_wrapper {
+	background: @bg-color-theme;
+	height: 100%;
+	position: fixed;
+	top: 0px; left: 0px;
+	opacity: 0.6;
+	width: 100%;
+	z-index: -1;
+}
+
+.signResults {
+	font-size: 20px;
+	height: 452px;
+	overflow: scroll;
+}
+
+.signResults p {
+	background: #fff; 
+	padding: 10px 14px;
+}
+
+.preview {
+	background-color: #fff;
+	text-shadow: none;
+	padding-bottom: 20px;
+}
+
+.preview small {
+	color: @font-color-theme;
+	font-size: 13px;
+}
+
+.preview img {
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+
+.preview .preview_content {
+	font-size: 12px;
+}
+
+.signUpPanel {
+	background: @bg-color-dark;
+	padding: 10px 30px 20px 10px;
+	-webkit-box-shadow: 0 0 50px 2px #000;
+	box-shadow: 0 0 50px 2px #000;
+}
+
+.signUpPanel h3 {
+	color: @font-color-light;
+	font-size: 30px;
+	font-family: helveticaBold;
+	letter-spacing: 0.3px;
+}
+
+.signUpPanel h4 {
+	color: @font-color-light;
+	font-size: 37px;
+	font-family: helveticaBold;
+	letter-spacing: 0.3px;
+}
+
+.signUpPanel p {
+	color: @font-color-light;
+	font-size: 14px;
+	letter-spacing: .3px;
+}
+
+.signUpPanel label {
+	color: @font-color-dark;
+	font-family: helveticaMd; 
+}
+
+.signUpPanel input::-webkit-input-placeholder { color: @font-color-fade; font-family: helveticaLight; font-size: 18px; }
+
+.signUpPanel input:-moz-placeholder { color: @font-color-fade; font-family: helveticaLight; font-size: 18px; }
+
+.signUpPanel input::-moz-placeholder { color: @font-color-fade; font-family: helveticaLight; font-size: 18px; }
+
+.signUpPanel input:-ms-input-placeholder { color: @font-color-fade; font-family: helveticaLight; font-size: 18px; }
+
+/* ============================ Profile Page ============================ */
+.container.wall .profile {
+	border-left: 1px solid @bg-color-fade;
+	min-height: 220px;
+}
+
+.profile .profileBasic {
+	border-bottom: 1px solid @bg-color-fade;
+}
+
+.profile .profileBasic .profileTitle {
+	color: @font-color-dark;
+	font-family: helveticaMd;
+	font-size: 24px;
+	margin-top: 0px;
+}
+
+.profile .profileBasic .profileName {
+	color: @font-color-theme;
+	font-family: helveticaLight;
+	font-size: 24px;
+	margin-top: 0px;
+}
+
+.profile .profileBasic .profileIssueAmount {
+	color: @font-color-dark;
+	font-family: helveticaLight;
+	font-size: 12px;
+	letter-spacing: 0.6px;
+	margin-top: 10px;
+}
+
+.profile .profileFields { 
+	border-bottom: 1px solid @bg-color-fade;
+	padding-bottom: 10px;
+}
+
+.profile .profileSubTitle {
+	color: @font-color-dark;
+	font-family: helveticaLight;
+	font-size: 22px;
+	margin-bottom: 10px;
+	margin-top: 20px;
+}
+
+.profile .profileFields .profileFollowField {
+	color: @font-color-dark;
+	letter-spacing: 0.5px;
+	font-family: helvaticaMd;
+	margin-right: 10px;
+}
+
+.profile .profileFields .profileFollowField:hover {
+	color: @font-color-light;
+}
+
+.profile .notifications {
+	color: @font-color-fade;
+	font-family: helveticaLight;
+	font-size: 14px;
+	letter-spacing: 1px;
+	margin-bottom: 10px;
+}
+
+.profile .notifications a {
+	color: @font-color-dark;
+	font-size: 16px;
+	text-decoration: underline;
+}
+
+.profile .folder {
+	color: @font-color-dark;
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
+.profile .delete_link {
+  color: @font-color-dark;
+  float: right;
+  font-size: 14px;
+}
+
+/* ============================ wall ============================ */
+.container.wall {
+    border-radius: 6px;
+	margin-top: 100px;
+    background-color: #e4e4e4;
+    padding-top: 30px;
+}
+
+.container.wall .wallFlow {
+	border-right: 1px solid @bg-color-fade;
+}
+
+.issuePanelWrapper {
+	border-radius: 3px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding: 20px;
+	/*-webkit-box-shadow: 0 0 5px 2px #000;
+	box-shadow: 0 0 10px 0px #000;*/
+}
+
+.issuePanelWrapper .issuePanel {
+	background: @bg-color-light;
+	border-radius: 3px;
+	padding: 10px;
+}
+
+
+.issuePanelWrapper .issuePanel a.posterName {
+	color: @font-color-theme;
+	font-family: helveticaMd;
+	font-size: 14px;
+	letter-spacing: 1px;
+    margin-left: 4px;
+}
+
+.issuePanelWrapper .issuePanel a.posterName:hover { color: @font-color-dark; }
+
+.issuePanelWrapper .issuePanel a.posterName img {
+	width: 32px;
+	height: 32px;
+	display: none;
+}
+
+.issuePanelWrapper .issuePanel a.postField {
+  color: @font-color-dark;
+  font-size: 12px;
+}
+
+.issuePanelWrapper .issuePanel a.postDelete {
+	color: @font-color-theme;
+	font-family: helveticaLight;
+	font-size: 12px;
+	float: right;
+}
+
+.issuePanelWrapper .issuePanel a.postMenu {
+	color: @font-color-theme;
+	font-family: helveticaLight;
+	font-size: 16px;
+	float: right;
+    margin-top: -22px;
+}
+
+.issuePanelWrapper .issuePanel ul.postMenuList {
+	position: absolute;
+	top: 27px;
+	right: 10px;
+	background: @bg-color-dark;
+	display: inline;
+	list-style: none;
+	padding: 5px;
+	-webkit-box-shadow: 0 1px 5px 0 #2e2e2e;
+	box-shadow: 0 1px 5px 0 #2e2e2e;
+	display: none;
+}
+
+.issuePanelWrapper .issuePanel ul.postMenuList li a {
+	color: @font-color-theme;
+	font-size: 11px;
+	font-weight: 300;
+}
+
+.issuePanelWrapper .issuePanel ul.postMenuList li a:hover {
+	text-decoration: underline;
+}
+
+.issuePanelWrapper .issuePanel .issueImg {
+	display: inline-block;
+	margin: 10px 10px 10px 0px;
+}
+
+.issuePanelWrapper .issuePanel .issueContent {
+	color: @font-color-dark;
+	font-family: helveticaLight;
+    margin-top: 10px;
+}
+
+.issuePanelWrapper .data {
+	color: @bg-color-fade;
+	font-size: 10px;
+	font-familiy: helveticaLight;
+}
+
+.issuePanelWrapper .time {
+  color: @bg-color-fade;
+  font-size: 10px;
+  font-familiy: helveticaLight;
+  margin-top: -4px;
+  display: block;
+  margin-left: 6px;
+  float: left;
+}
+
+.issuePanelWrapper .userbranch {
+  color: @bg-color-dark;
+  font-size: 10px;
+  font-familiy: helveticaLight;
+  margin-top: -4px;
+  display: block;
+  margin-left: 6px;
+  float: left;
+}
+
+.issuePanelWrapper .commentBoxList {}
+
+.issuePanelWrapper .commentBoxList .link2oldComments {
+	background: #ECF5F4;
+	border-radius: 3px;
+	color: @font-color-dark;
+	width: 100%;
+	display: block;
+	padding: 10px 0px;
+	text-align: center;
+}
+
+.issuePanelWrapper .commentBoxList .link2oldComments:hover {
+	background: @bg-color-dark;
+	color: @font-color-light;
+}
+
+.issuePanelWrapper .commentBoxList .commentBox {
+	border-bottom: 1px solid @bg-color-fade;
+	padding: 10px 0px;
+}
+
+.issuePanelWrapper .commentBoxList .commentBox .profile {
+	color: @font-color-theme;
+	font-family: helveticaMd;
+	font-size: 12px;
+	letter-spacing: 1px;
+}
+
+.issuePanelWrapper .commentBoxList .commentBox .deleteComment {
+	color: @font-color-theme;
+	font-family: helveticaLight;
+	font-size: 12px;
+	float: right;
+}
+
+.issuePanelWrapper .commentBoxList .commentBox .commentStar {
+	position: absolute;
+	right: 9px;
+	top: 16px;
+	font-size: 22px;
+}
+
+.issuePanelWrapper .commentBoxList .commentBox .commentStar i.dark {
+	color: @font-color-dark;
+	display: none;
+}
+
+.issuePanelWrapper .commentBoxList .commentBox:hover .commentStar i {
+	display: inline;
+}
+
+.issuePanelWrapper .commentBoxList .commentBox .commentStar i.dark:hover {
+	color: yellow;
+}
+
+.issuePanelWrapper .commentBoxList .commentBox .commentStar i.yellow {
+	color: yellow;
+}
+
+.issuePanelWrapper .commentBoxList .commentBox .commentStar i.yellow:hover {
+	color: @font-color-dark;
+}
+
+.issuePanelWrapper .commentBoxList .commentBox .commentContent {
+	color: @font-color-dark;
+	font-family: helveticaLight;
+	font-size: 14px;
+}
+
+.issuePanelWrapper .commentBoxList .commentBox footer .data {
+	color: @bg-color-fade;
+	font-size: 10px;
+	font-familiy: helveticaLight;
+}
+
+.issuePanelWrapper .commentBoxList .commentBox footer .like {
+  color: @font-color-dark;
+  font-size: 12px;
+}
+
+.issuePanelWrapper .commentBoxList .commentBox footer .like  span {
+  font-size: 10px;
+}
+
+.issuePanelWrapper .commentBoxList .commentPlace {
+	padding: 0px !important;
+}
+
+.issuePanelWrapper .commentBoxList .commentPlace img {
+	position: absolute;
+	top: 10px; left: 10px;
+	height: 32px;
+	width: 32px;
+}
+
+.issuePanelWrapper .commentBoxList .commentPlace textarea { padding-left: 50px; }
+
+/* ============================ Field Page ============================ */
+.fieldInfo {
+	background: @bg-color-dark;
+	font-family: helveticaLight;
+	margin-bottom: 20px;
+	padding: 9px;
+	border-radius: 3px;
+	height: 100px;
+}
+
+.fieldInfo p {
+	color: @font-color-theme;
+	font-family: helveticaLight;
+	font-size: 16px;
+	letter-spacing: 1px;
+}
+
+.fieldInfo p.warning {
+	color: @font-color-light;
+	font-size: 16px;
+	letter-spacing: 1px;
+}
+
+.fieldInfo span.detail {
+	color: @font-color-fade;
+	font-family: helveticaLight;
+	font-size: 9px;
+	letter-spacing: 1px;
+}
+
+.fieldInfo p.warning .notificationLink {
+	font-size: 46px;
+	color: #20a393;	
+}
+
+/* ============================ All Fields ============================ */
+.allFields {}
+
+.allFields .fieldPanel {
+	background: #ECF5F4;
+	border-radius: 3px;
+	margin-bottom: 30px;
+	padding: 1px 10px 10px 10px;
+}
+
+.allFields .fieldPanel h6 a {
+	color: @font-color-dark;
+	font-family: helveticaLight;
+	font-size: 16px;
+	letter-spacing: 1px;
+    text-transform: capitalize;
+}
+
+.allFields .fieldPanel span {
+	color: @font-color-dark;
+	font-family: helveticaLight;
+	font-size: 10px;
+	letter-spacing: 1px;
+	margin-bottom: 10px;
+}
+
+.allFields .fieldPanel img {
+	margin: 10px 0px;
+}
+
+
+/* ============================ Right Side Bar ============================ */
+.rightSideBar h6 {
+	color: @font-color-theme;
+	font-family: helveticaLight;
+	font-size: 22px;
+}
+
+.rightSideBar h6 a {
+	color: @font-color-dark;
+	float: right;
+	font-family: helveticaLight;
+	font-size: 12px;
+	margin-top: 10px;
+	text-decoration: underline;
+}
+
+.rightSideBar p.subInfo {
+	color: @font-color-dark;
+	font-family: helveticaLight;
+	font-size: 12px;
+}
+
+.rightSideBar .fields {}
+
+
+.fields .field {
+	border-bottom: 1px solid @bg-color-fade;
+	padding: 10px 0px;
+	font-family: helveticaLight;
+	letter-spacing: 1px;
+    text-transform: capitalize;
+}
+
+.fields .field a {
+	color: @font-color-dark;
+	display: block;
+	font-size: 14px;
+}
+
+.fields .field span.followerAmount {
+	color: @font-color-fade;
+	font-size: 10px;
+}
+
+.fields .field button.status {
+	float: right;
+	margin-top: -15px;
+}
+
+.rightSideBar .searchField { position: relative; }
+
+.rightSideBar .searchField i {
+	color: @font-color-theme;
+	position: absolute;
+	top: 10px;
+	right: 10px; 
+}
+
+
+.rightSideBar .searchField .brachSearchResult {
+	background: @bg-color-theme;
+	position: absolute;
+	height: auto; width: 300px;
+	padding: 0px 10px;
+	top: 40px; right: 1%;
+	-webkit-box-shadow: 0 1px 5px 0 @bg-color-dark;
+	box-shadow: 0 1px 5px 0 @bg-color-dark;
+}
+
+.rightSideBar .searchField .brachSearchResult a {
+	border-bottom: 1px solid @bg-color-light;
+	color: @font-color-light;
+	display: block;
+	font-family: helveticaLight;
+	letter-space: 1px;
+	padding: 10px 0px;
+}
+
+.rightSideBar .searchField .brachSearchResult a:last-child {
+	border-bottom: none;
+}
+
+/* ============================ Right Side Bar (profile) ============================ */
+.rightSideBarProfile {}
+
+.rightSideBarProfile a {
+	display: block;
+	text-align: right;
+	color: @font-color-dark;
+	font-family: helveticaLight;
+	font-size: 16px;
+	letter-spacing: 1px;
+	margin-bottom: 10px;
+}
+
+/* ============================ Notification Pop-Up ============================ */
+.notificationPopupWrapper {
+width: 300px;
+height: 450px;
+position: fixed;
+overflow: hidden;
+padding: 30px 26px;
+z-index: 0;
+left: -35px;
+}
+
+.notificationPopup {
+	background: @bg-color-dark;
+	border-radius: 10px;
+	color: #a6abb1;
+	display: block;
+	margin-bottom: 30px;
+	padding: 10px 20px 10px 30px;
+	margin-left: -100%;
+	position: relative;
+	width: 100%;
+	opacity: .8;
+}
+
+.notificationPopup .branch {
+	color: @font-color-theme;
+}
+
+.notificationPopup .text {
+	color: @font-color-fade;
+}
+
+.notificationPopup button {
+	background: @bg-color-theme;
+	border-radius: 50%;
+	color: @font-color-dark;
+	display: none;
+	font-weight: bold;
+	position: absolute;
+	right: -8px;
+	top: -9px;
+}
+
+.notificationPopup:hover {
+	opacity: 1;
+}
+
+.notificationPopup:hover button {
+	display: block;
+}
+
+/* ============================ Lightbox ============================ */
+.lightboxOverlay {
+	background: @bg-color-light;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0px; left: 0px;
+	z-index: 99999;
+	opacity: 0.8;
+	display: none;
+}
+
+.lightbox {
+	background: @bg-color-theme;
+	width: 10%;
+	height: 10%;
+	position: fixed;
+	top: 0px; left: 0px;
+	bottom: 0px; right: 0px;
+	margin: auto;
+	z-index: 99999;
+	display: none;
+}
+
+.lightbox .lightboxClose {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	font-weight: bold;
+	cursor: pointer;
+	font-size: 18px;
+	color: @font-color-dark;
+	background: @bg-color-light;
+	position: absolute;
+	top: -15px;
+	right: -15px;
+	text-align: center;
+	line-height: 30px;
+}
+
+.lightbox .lightboxLeftArrow,
+.lightbox .lightboxRightArrow {
+	font-size: 60px;
+	color: @font-color-dark;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	margin: auto;
+	cursor: pointer;
+	width: 56px;
+	height: 54px;
+}
+
+.lightbox .lightboxLeftArrow {
+	left: 6px;
+}
+
+.lightbox .lightboxRightArrow {
+	right: 6px;
+}
+
+.lightbox .lightboxLeftArrow i,
+.lightbox .lightboxRightArrow i {
+	display: block;
+}
+
+.lightbox .lightboxLeftArrow:hover,
+.lightbox .lightboxRightArrow:hover {
+	color: @font-color-light;
+}
+
+.lightbox .lightboxContent {
+	width: 100%;
+	height: 100%;
+}
+
+
