@@ -16,7 +16,7 @@ if(empty($commentData))
 else
 {
 	// Input has some text and is not empty. 
-	$query = $db->prepare("INSERT INTO `gwp_post_meta`
+	$query = $db->prepare("INSERT INTO `veb_post_meta`
 						SET `post_id` = :post_id,
 							`status` = :status,
 							`group` = :group,
@@ -41,7 +41,7 @@ else
 		// if comment insert is successfull, insert some values to notification to post owner
 		// if user id and post owner is same person do not insert
 		if($user_id != $postOwner) {
-			$db->query("INSERT INTO `gwp_notifications` 
+			$db->query("INSERT INTO `veb_notifications` 
 						SET `datetime` = '$date', 
 							`type` = 'comment',
 							`val_1` = '$postId',
