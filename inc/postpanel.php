@@ -8,6 +8,7 @@ if(isset($_POST['save']))
 	$archive= $_POST['archive'];
 	$errors = array();
 	$result = '';
+	$is_action_success = 'danger';
 
 	/*
 		- if any image is uplaoded, insert '1' to val_3 or '0' to val_3
@@ -87,6 +88,7 @@ if(isset($_POST['save']))
 		if($done)
 		{
 			$result .= "Gönderi Yapıldı";
+			$is_action_success = 'success';
 			$_POST['issue'] = '';
 		}
 		else
@@ -101,8 +103,11 @@ if(isset($_POST['save']))
 if(!empty($result)) { ?>
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
-			<div class="alert alert-danger alert-dismissable">
-			  <?php echo $result; ?>
+			<div class="alert alert-<?php echo $is_action_success; ?> alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			  	<?php echo $result; ?>
 			</div>
 		</div>
 	</div>

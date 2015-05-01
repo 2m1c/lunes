@@ -16,6 +16,7 @@ if( isset($_POST['save_account']) )
 	$password = md5($_POST['password']);
 	$pass = select_query("password", "gwp_users", "id = $user_id");
 	$result = ''; // display results in this variable
+	$is_action_success = 'danger';
 
 	if($password == $pass)
 	{
@@ -84,6 +85,7 @@ if( isset($_POST['save_account']) )
 			if($done)
 			{
 				$result .= "Değişiklikler tamamlandı";
+				$is_action_success = 'success';
 			}
 			else
 			{
@@ -104,6 +106,7 @@ if( isset($_POST['save_image']) )
 	$password = md5($_POST['password']);
 	$pass = select_query("password", "gwp_users", "id = $user_id");
 	$result = ''; // display results in this variable
+	$is_action_success = 'danger';
 
 	if($password == $pass)
 	{
@@ -119,6 +122,7 @@ if( isset($_POST['save_image']) )
 
 		single_image_upload($parameter);
 		$result .= "Resminiz değiştirildi!";
+		$is_action_success = 'success';
 	}
 	else
 	{
@@ -132,6 +136,7 @@ if( isset($_POST['change_password']) )
 	$myPassword 		= md5($_POST['myPassword']);
 	$newPassword 		= $_POST['newPassword'];
 	$passwordConfirm	= $_POST['passwordConfirm'];
+	$is_action_success = 'danger';
 
 	$pass 		= select_query("password", "gwp_users", "id = $user_id");
 
@@ -169,6 +174,7 @@ if( isset($_POST['change_password']) )
 		if($done)
 		{
 			$result .= "Şifreniz değiştirildi";
+			$is_action_success = 'success';
 		}
 		else
 		{
@@ -185,6 +191,7 @@ if( isset($_POST['save_filename']) )
 	$filename = $_POST['filename'];
 	$errors = array();
 	$result = '';
+	$is_action_success = 'danger';
 
 	if(empty($filename))
 	{
@@ -213,6 +220,7 @@ if( isset($_POST['save_filename']) )
 		if($query)
 		{
 			$result .= $filename." isimli arşiv eklendi";
+			$is_action_success = 'success';
 		}
 		else
 		{
@@ -230,6 +238,7 @@ if( isset($_POST['archive_post']) )
 
 	$errors = array();
 	$result = '';
+	$is_action_success = 'danger';
 
 	if($filename == NULL || $filename == 0 )
 	{
@@ -253,6 +262,7 @@ if( isset($_POST['archive_post']) )
 		if($query)
 		{
 			$result .= "Gönderiniz arşive eklendi";
+			$is_action_success = 'success';
 		}
 		else
 		{
@@ -277,8 +287,11 @@ $profile_id = $_GET['profile_id'];
 if(!empty($result)) { ?>
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
-			<div class="alert alert-danger alert-dismissable">
-			  <?php echo $result; ?>
+			<div class="alert alert-<?php echo $is_action_success; ?> alert-dismissable">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			  	<?php echo $result; ?>
 			</div>
 		</div>
 	</div>
@@ -593,7 +606,7 @@ $url 	= ( $obj->type = 'comment' ? 'post.php?id='.$obj->val_1 : 'post.php?id='.$
 				</div>
 			</div>
 			</form>
-
+			<div class="clear marginTop20"></div>
 		</div><!-- /.col-md-10 -->
 
 <?php } else if($url == "image") { ?>
@@ -677,6 +690,7 @@ $url 	= ( $obj->type = 'comment' ? 'post.php?id='.$obj->val_1 : 'post.php?id='.$
 					<input type="submit" name="change_password" value="DEĞİŞİKLİKLERİ KAYDET" class="btn btn-theme btn-lg pull-right">
 				</div>
 			</div>
+			<div class="clear marginTop20"></div>
 			</form>
 
 		</div><!-- /.col-md-10 -->
@@ -713,27 +727,27 @@ while ($folder = $user_folders->fetch(PDO::FETCH_OBJ)) { ?>
 					<input type="submit" name="archive_post" value="Gönderiyi Bu Dosyada Arşivle" class="btn btn-theme btn-lg pull-right">
 				</div>
 			</div>
-
+			<div class="clear marginTop20"></div>
 			</form>
 
 			<?php } else { ?>
 
 			<form method="post" action="">
 			
-			<div class="row marginTop20">
-				<div class="form-group">
-					<label for="filename" class="col-md-2 col-sm-12 col-xs-12 control-label">Arşiv Adı</label>
-					<div class="col-md-10 col-sm-12 col-xs-12">
-						<input type="text" name="filename" class="form-control input-lg" id="filename" placeholder="Arşiv Adı Girin">
+				<div class="row marginTop20">
+					<div class="form-group">
+						<label for="filename" class="col-md-2 col-sm-12 col-xs-12 control-label">Arşiv Adı</label>
+						<div class="col-md-10 col-sm-12 col-xs-12">
+							<input type="text" name="filename" class="form-control input-lg" id="filename" placeholder="Arşiv Adı Girin">
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="row marginTop20">
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<input type="submit" name="save_filename" value="ARŞİVİ KAYDET" class="btn btn-theme btn-lg pull-right">
+				<div class="row marginTop20">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<input type="submit" name="save_filename" value="ARŞİVİ KAYDET" class="btn btn-theme btn-lg pull-right">
+					</div>
 				</div>
-			</div>
 
 			</form>
 
@@ -755,8 +769,7 @@ $no++;
 <?php } ?>
 			</div>
 
-		
-
+		<div class="clear marginTop20"></div>
 		</div><!-- /.col-md-10 -->
 
 <?php } else if($url == "delete") { ?>
