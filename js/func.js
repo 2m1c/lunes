@@ -424,7 +424,7 @@ $notification = (function(){
         return { init : init };
 
 })();
-$notification.init();
+//$notification.init();
 
 // display selected image's name
 /*
@@ -750,4 +750,131 @@ var displayPreloader = function(root) {
 }
 $(document).ready(function(){
     new displayPreloader(".js-preloader-trigger");
+});
+
+$(function(){
+// scroll and fetch more products
+var $scrollAjax = (function() {
+
+    var $document       = $(document),
+        href            = 'func/scroll-ajax.php',
+        $resultContainer = $('.js-scroll-result'),
+
+    //initialize function
+    init        = function() 
+    {
+        initEvents();
+    },
+
+    scrollEvent  = function()
+    {
+        $document.scroll(function(){
+            if($(window).scrollTop() + $(window).height() == $(document).height())
+            {
+                setTimeout(function(){ 
+                   ajaxHandler();
+                },300 );
+            }
+            else
+            {
+                return false;
+            }
+        });
+    },
+
+    ajaxHandler = function()
+    {
+        offset = $resultContainer.data('offset'),
+        category = $resultContainer.data('category'),
+        $.ajax({
+            type: 'POST',
+            url: href,
+            dataType: 'json',
+            data: { offset : offset, category : category},
+            cache: false,
+            success: function(data) {
+                $resultContainer.append(data.html);
+                $resultContainer.data({'offset': data.offset});
+            },
+            error: function()
+            {
+                return false;
+            }
+        });
+        
+    },
+
+    initEvents  = function() 
+    {
+        scrollEvent();
+    };
+
+    return { init : init };
+
+}) ();
+$scrollAjax.init();
+});
+
+$(function(){
+// search box - search with ajax
+var $scrollAjax = (function() {
+
+    var $input          = $('.js-search-box'),
+        $target         = $('.js-search-result'),
+        href            = 'func/search-ajax.php',
+
+    //initialize function
+    init        = function() 
+    {
+        initEvents();
+    },
+
+
+    ajaxHandler = function(item)
+    {
+        setTimeout(function(){
+            var searchItem = item;
+            $.ajax({
+                type: 'POST',
+                url: href,
+                dataType: 'json',
+                data: { searchItem : searchItem},
+                cache: false,
+                success: function(data) {
+                    $target.html(data.html);
+                },
+                error: function()
+                {
+                    return false;
+                }
+            });
+        }, 300);
+        
+    },
+
+    closeSearchResult = function()
+    {
+        $target.find('li')
+                .delay(300)
+                .fadeOut(0,function(){
+                    $(this).find('li').remove();
+                });
+    }
+
+    initEvents  = function() 
+    {
+        $input.on('keyup', this, function(){
+            var thisVal = $(this).val();
+            ajaxHandler(thisVal);
+        });
+
+        $input.focusout(function(){
+            closeSearchResult();
+        });
+    };
+
+    return { init : init };
+
+}) ();
+$scrollAjax.init();
 });

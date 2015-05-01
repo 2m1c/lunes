@@ -68,14 +68,7 @@ if(empty($branch_array)) { array_push($branch_array, 3); }
 $followed_bracnhes = implode(", ", $branch_array);
 
 
-// Begin: pagination setting
-$pages_query = $db->query("SELECT id FROM gwp_posts WHERE `type` = 'branch_post' AND CASE WHEN `val_1` = '$user_id' THEN `status` IN (1,2) ELSE `status` = '1' END");
-$total_rows	= $pages_query->rowCount();
-$per_page 	= 20;
-$start 		= ( isset($_GET['page']) ? ($_GET['page'] - 1) * $per_page  : 0 );
-// End: pagination setting
-
-$post_query = $db->query("SELECT * FROM gwp_posts WHERE `type` = 'branch_post' AND CASE WHEN `val_1` = '$user_id' THEN `status` IN (1,2) ELSE `status` = '1' END ORDER BY datetime DESC LIMIT $start, $per_page");
+$post_query = $db->query("SELECT * FROM gwp_posts WHERE `type` = 'branch_post' AND CASE WHEN `val_1` = '$user_id' THEN `status` IN (1,2) ELSE `status` = '1' END ORDER BY datetime DESC LIMIT 0, 10");
 $gallery_no = 0;
 while ($post = $post_query->fetch(PDO::FETCH_OBJ)) {
 $gallery_no++;
@@ -183,37 +176,12 @@ $posted_branch  = '<a href="field.php?url='.$branch_url.'" class="postField"> <i
 
 				</div><!-- /.row -->
 
-
+				<div class="js-scroll-result" data-offset="10"> sdd </div>
+				
 			    </section><!-- issuePanel -->
-
 <?php } ?>
 
-			<div class="row">
-
-				<div class="col-md-2 hidden-xs">&nbsp;</div>
-				<div class="col-md-10 col-xs-12">
-					<ul class="pagination">
-<?php
-// pagintaion buttons
-$curr_page = ( isset($_GET['page']) ? $_GET['page'] : 1 );
-$paging 	= ceil($total_rows / $per_page);
-$break 		= ($curr_page + 5 == $paging ? $paging - 1 : $curr_page + 5 );
-$startPoint = ($paging <= 8 ? 1 : ( $paging - ($curr_page+1) <= 3 && $paging >= 8 ? $curr_page - 3 : $curr_page ) );
-
-for($i = $startPoint; $i <= $paging; $i++)
-{
-	if($i <= $break) {
-		echo ($i == $curr_page ? '<li><a class="active" href="?page='.$i.'">'.$i.'</a></li>' : '<li><a href="?page='.$i.'">'.$i.'</a></li>' );
-		if($i==$break) {
-			echo '<li><a>...</a> </li><li><a href="./sayfa/'.$paging.'">'.$paging.'</a></li>';
-		}
-	}
-}
-?>
-					</ul>
-				</div>
-
-			</div><!-- /.row -->
+			
 
 		</div><!-- /.col-md-8 -->
 
