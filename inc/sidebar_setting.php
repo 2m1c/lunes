@@ -11,7 +11,7 @@ if($user_id == $profile_id)
 {?>
 	<a href="profile.php?url=notification&profile_id=<?php echo $user_id; ?>">Bildirimlerim</a>
 	<a href="profile.php?url=account&profile_id=<?php echo $user_id; ?>">Hesap Ayarları</a>
-	<a href="profile.php?url=image&profile_id=<?php echo $user_id; ?>">Resim Ayarları</a>
+	<a href="profile.php?url=image&profile_id=<?php echo $user_id; ?>">Profil Resimleri</a>
 	<a href="profile.php?url=password&profile_id=<?php echo $user_id; ?>">Şifre Ayarları</a>
 	<a href="profile.php?url=delete&profile_id=<?php echo $user_id; ?>">Hesabı Sil</a>
 <?php 
@@ -29,7 +29,7 @@ if($user_id == $profile_id)
     { ?>
         <option value="profile.php?url=notification&profile_id=<?php echo $user_id; ?>">Bildirimlerim</option>
         <option value="profile.php?url=account&profile_id=<?php echo $user_id; ?>">Hesap Ayarları</option>
-        <option value="profile.php?url=image&profile_id=<?php echo $user_id; ?>">Resim Ayarları</option>
+        <option value="profile.php?url=image&profile_id=<?php echo $user_id; ?>">Profil Resimleri</option>
         <option value="profile.php?url=password&profile_id=<?php echo $user_id; ?>">Şifre Ayarları</option>
         <option value="profile.php?url=delete&profile_id=<?php echo $user_id; ?>">Hesabı Sil</option>
     <?php } ?>

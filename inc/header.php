@@ -35,10 +35,13 @@
 			<?php /* <a href="#" class="action js-branch-notification" role="button"><i class="fa fa-question"></i></a>*/ ?>
 			<a href="#" class="action js-notification js-ajaxForNotification" role="button">0</a>
 			
-			<a href="profile.php?url=general&profile_id=<?php echo $user_id; ?>"><img src="<?php echo get_current_user_image(); ?>" alt="#"><span><?php echo select_query("name", "gwp_users", "id = $user_id", "lower"); ?></span></a>
+			<?php
+				$profile_name = select_query("name", "gwp_users", "id = $user_id", "lower");
+			?>
+
+			<a href="profile.php?url=general&profile_id=<?php echo $user_id; ?>"><img src="<?php echo get_current_user_image(); ?>" alt="<?php echo $profile_name; ?>"><span><?php echo $profile_name; ?></span></a>
         </div> <!-- /.col-md-4 -->
 
-		<div class="js-">
 
 		<div class="notificationList js-notificationList">
 			<!-- Ajax Control -->

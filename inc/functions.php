@@ -137,16 +137,17 @@ if( isset($_COOKIE['user_id']) )
 	{
 		global $db;
 		$user_id = $_COOKIE['user_id'];
-		$query = $db->query("SELECT val_text FROM gwp_user_meta WHERE `group` = 'profile' AND `post_id` = '$user_id'");
-		$obj = $query->fetch();
-		$img = $obj->val_text;
-		if($img == false) 
+		$query = $db->query("SELECT `val_text` FROM `gwp_user_meta` WHERE `group` = 'profile' AND `post_id` = '$user_id'");
+		$count = $query->rowCount();
+		if( $count >= 1 )
+		{
+			$obj = $query->fetch();
+			$img = $obj->val_text;
+			return $img;
+		}
+		else
 		{
 			return "img/doctor.jpg";
-		}
-		else 
-		{
-			return $img;
 		}
 	}
 
