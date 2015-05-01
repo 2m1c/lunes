@@ -49,52 +49,69 @@ if(isset($_POST['save']))
 	}
 	else
 	{
-		$query = $db->prepare("INSERT INTO gwp_posts
-							SET `status` = :status,
-								`datetime` = :datetime,
-								`type` = :type,
-								`content` = :content,
-								`val_1` = :val_1,
-								`val_2` = :val_2,
-								`val_3` = :val_3,
-								`val_4` = :val_4");
-
-		$query->bindValue(':status', 1);
-		$query->bindValue(":datetime", date('Y-m-d H:i:s'));
-		$query->bindValue(':type', $post_type);
-		$query->bindValue(':content', $issue);
-		$query->bindValue(':val_1', $user_id);
-		$query->bindValue(':val_2', $branch);
-		$query->bindValue(':val_3', $imageExist);
-		$query->bindValue(':val_4', $archive);
-		$done = $query->execute();
-
-		$last_id = $db->lastInsertId(); 
-
-		$fileInput     	= $_FILES['file'];
-        $postId        	= $last_id;
-        $fileName      	= $last_id;
-        $directory     	= 'post';
-        $table_name    	= 'gwp_post_meta';
-        $group    		= 'post_img';
-
-		multiple_image_upload($fileInput, $postId, $fileName, $directory, $table_name, $group);
-
-        // if post type is archive insert post information into gwp_user_meta
-        if($post_type = 'archive_post') {
-            $db->query("INSERT INTO `gwp_user_meta` SET `post_id` = '$user_id', `group` = 'archived_post', `key` = 'archived_post', `val_1` = '$last_id', `val_2` = '$archive'");
-        }
-
-		if($done)
+		try 
 		{
-			$result .= "Gönderi Yapıldı";
-			$is_action_success = 'success';
-			$_POST['issue'] = '';
-		}
-		else
+			$db->beginTransaction();
+
+			$query = $db->prepare("INSERT INTO gwp_posts
+								SET `status` = :status,
+									`datetime` = :datetime,
+									`type` = :type,
+									`content` = :content,
+									`val_1` = :val_1,
+									`val_2` = :val_2,
+									`val_3` = :val_3,
+									`val_4` = :val_4");
+
+			$query->bindValue(':status', 1);
+			$query->bindValue(":datetime", date('Y-m-d H:i:s'));
+			$query->bindValue(':type', $post_type);
+			$query->bindValue(':content', $issue);
+			$query->bindValue(':val_1', $user_id);
+			$query->bindValue(':val_2', $branch);
+			$query->bindValue(':val_3', $imageExist);
+			$query->bindValue(':val_4', $archive);
+			$done = $query->execute();
+
+			$last_id = $db->lastInsertId(); 
+
+			$fileInput     	= $_FILES['file'];
+	        $postId        	= $last_id;
+	        $fileName      	= $last_id;
+	        $directory     	= 'post';
+	        $table_name    	= 'gwp_post_meta';
+	        $group    		= 'post_img';
+
+			multiple_image_upload($fileInput, $postId, $fileName, $directory, $table_name, $group);
+
+	        // if post type is archive insert post information into gwp_user_meta
+	        if($post_type = 'archive_post') {
+	            $db->query("INSERT INTO `gwp_user_meta` SET `post_id` = '$user_id', `group` = 'archived_post', `key` = 'archived_post', `val_1` = '$last_id', `val_2` = '$archive'");
+	        }
+
+			if($done)
+			{
+				$result .= "Gönderi Yapıldı";
+				$is_action_success = 'success';
+				$_POST['issue'] = '';
+			}
+			else
+			{
+				$result .= "Bilinmeyen bir sebepten ötürü gönderi tamamlanamadı.<br />Lütfen tekrar deneyin";
+			}
+
+			$db->commit();
+		} 
+		catch ( Exception $e )
 		{
-			$result .= "Bilinmeyen bir sebepten ötürü gönderi tamamlanamadı.<br />Lütfen tekrar deneyin";
+			$db->rollBack();
+
+			$myfile = fopen("log_errors.txt", "a");
+			$txt = $e->getMessage();
+			fwrite($myfile, $txt);
+			fclose($myfile);
 		}
+		
 
 	}
 }

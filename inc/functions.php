@@ -677,7 +677,6 @@ if( isset($_COOKIE['user_id']) )
 
 		$files = $fileInput;
 
-		
 	    // verot class.upload çoklu resim yükleme işlemi
 		$filename = $files;
 		$dosyalar = array();
@@ -690,93 +689,104 @@ if( isset($_COOKIE['user_id']) )
 		}
 
 		$inc = 0;
+		$count_file = count( $dosyalar );
 		foreach ($dosyalar as $i => $val){
-			if($val["tmp_name"]=="") { continue; }
-			$inc++;
+			if( $i <= 9 )
+			{	
+				if($val["tmp_name"]=="") { continue; }
+				$inc++;
 
 
-			// resim yolunu ayarla
-			$year 	= date('Y');
-			$month 	= date('m');
-			$day 	= date('d');
-			if(!is_dir("./uploads/$directory")){
-		    	mkdir("./uploads/$directory", 0777);
-		    }
-		    if(!is_dir("./uploads/$directory/$year")){
-		    	mkdir("./uploads/$directory/$year", 0777);
-		    }
-		    if(!is_dir("./uploads/$directory/$year/$month")){
-		    	mkdir("./uploads/$directory/$year/$month", 0777);
-		    }
-		    if(!is_dir("./uploads/$directory/$year/$month/$day")){
-		    	mkdir("./uploads/$directory/$year/$month/$day", 0777);
-		    }
-		    if(!is_dir("./uploads/$directory/$year/$month/$day/".$postId."")){
-		    	mkdir("./uploads/$directory/$year/$month/$day/".$postId."", 0777);
-		    }
+				// resim yolunu ayarla
+				$year 	= date('Y');
+				$month 	= date('m');
+				$day 	= date('d');
+				if(!is_dir("./uploads/$directory")){
+			    	mkdir("./uploads/$directory", 0777);
+			    }
+			    if(!is_dir("./uploads/$directory/$year")){
+			    	mkdir("./uploads/$directory/$year", 0777);
+			    }
+			    if(!is_dir("./uploads/$directory/$year/$month")){
+			    	mkdir("./uploads/$directory/$year/$month", 0777);
+			    }
+			    if(!is_dir("./uploads/$directory/$year/$month/$day")){
+			    	mkdir("./uploads/$directory/$year/$month/$day", 0777);
+			    }
+			    if(!is_dir("./uploads/$directory/$year/$month/$day/".$postId."")){
+			    	mkdir("./uploads/$directory/$year/$month/$day/".$postId."", 0777);
+			    }
 
-			// $fileName = dosyanın adı
-			// $i = dosya adları aynı olmaması için $i değerinde ki rakamı alıyoruz
+				// $fileName = dosyanın adı
+				// $i = dosya adları aynı olmaması için $i değerinde ki rakamı alıyoruz
 
-			$dosya_ad 	= $fileName.'-'.$inc;
+				$dosya_ad 	= $fileName.'-'.$inc;
 
-			$file = new Upload($val);
-			
-			if ($file->uploaded) {
-				// upload thumb
-				$file->file_new_name_body = $dosya_ad.'_thumb';
-				$file->image_ratio_crop = true;
-				$file->image_ratio_fill = true;
-				$file->image_resize  = true;
-				$file->jpeg_quality = 80;
-				$file->image_x = 200;
-				$file->image_y = 200;
-				$file->allowed = array('application/pdf','application/msword', 'image/*');
-                $ext = $file->file_src_name_ext;
-                
-				$file->process('./uploads/'.$directory.'/'.$year.'/'.$month.'/'.$day.'/'.$postId.'/');
-                
-				// resmin orjinalini croplayarak upload ettir
-				$file->file_new_name_body = $dosya_ad;
-				$file->image_ratio_crop = true;
-				$file->image_ratio_fill = true;
-				$file->image_resize  = true;
-				$file->jpeg_quality = 80;
-				if($file->image_src_x >= 700) {
-					$file->image_x = 700;
-				}
-				if($file->image_src_y >= 600) {
-					$file->image_y = 600;
+				$file = new Upload($val);
+
+				$img_quality = 80;
+				
+				if( $count_file >= 5 )
+				{
+					$img_quality = 60;
 				}
 				
-				$file->allowed = array('application/pdf','application/msword', 'image/*');
-				$file->process('./uploads/'.$directory.'/'.$year.'/'.$month.'/'.$day.'/'.$postId.'/');
+				if ($file->uploaded) {
+					// upload thumb
+					$file->file_new_name_body = $dosya_ad.'_thumb';
+					$file->image_ratio_crop = true;
+					$file->image_ratio_fill = true;
+					$file->image_resize  = true;
+					$file->jpeg_quality = $img_quality;
+					$file->image_x = 200;
+					$file->image_y = 200;
+					$file->allowed = array('application/pdf','application/msword', 'image/*');
+	                $ext = $file->file_src_name_ext;
+	                
+					$file->process('./uploads/'.$directory.'/'.$year.'/'.$month.'/'.$day.'/'.$postId.'/');
+	                
+					// resmin orjinalini croplayarak upload ettir
+					$file->file_new_name_body = $dosya_ad;
+					$file->image_ratio_crop = true;
+					$file->image_ratio_fill = true;
+					$file->image_resize  = true;
+					$file->jpeg_quality = $img_quality;
+					if($file->image_src_x >= 700) {
+						$file->image_x = 700;
+					}
+					if($file->image_src_y >= 600) {
+						$file->image_y = 600;
+					}
+					
+					$file->allowed = array('application/pdf','application/msword', 'image/*');
+					$file->process('./uploads/'.$directory.'/'.$year.'/'.$month.'/'.$day.'/'.$postId.'/');
 
-				//resim galerisi için post_meta tablosuna verileri ekleyelim.
+					//resim galerisi için post_meta tablosuna verileri ekleyelim.
 
-				$extension 	= $file->file_src_name_ext;
-				$src_type 	= $file->image_src_type;
-				$path 		= str_replace("\\",'', $file->file_dst_path);
-				$file_size 	= $file->file_src_size;
-				$src_x 		= $file->image_src_x;
-				$src_y 		= $file->image_src_y;
-				$pathname 	= str_replace("\\",'', $file->file_dst_pathname);
-				$now 		= date('Y-m-d H:i:s');
-				$name_body 	= $file->file_dst_name_body;
-				
-				$query = $db->query("INSERT INTO $tableName 
-									SET `post_id` = '$postId',
-										`group` = '$group',
-										`key` 	= '$name_body',
-										`val_1` = '$extension',
-										`val_2` = '$src_type',
-										`val_3` = '$path',
-										`val_4` = '$file_size',
-										`val_5` = '$src_x',
-										`val_6` = '$src_y',
-										`val_int` = '$user_id',
-										`val_text` = '$pathname',
-										`val_date` = '$now'");
+					$extension 	= $file->file_src_name_ext;
+					$src_type 	= $file->image_src_type;
+					$path 		= str_replace("\\",'', $file->file_dst_path);
+					$file_size 	= $file->file_src_size;
+					$src_x 		= $file->image_src_x;
+					$src_y 		= $file->image_src_y;
+					$pathname 	= str_replace("\\",'', $file->file_dst_pathname);
+					$now 		= date('Y-m-d H:i:s');
+					$name_body 	= $file->file_dst_name_body;
+					
+					$query = $db->query("INSERT INTO $tableName 
+										SET `post_id` = '$postId',
+											`group` = '$group',
+											`key` 	= '$name_body',
+											`val_1` = '$extension',
+											`val_2` = '$src_type',
+											`val_3` = '$path',
+											`val_4` = '$file_size',
+											`val_5` = '$src_x',
+											`val_6` = '$src_y',
+											`val_int` = '$user_id',
+											`val_text` = '$pathname',
+											`val_date` = '$now'");
+				}
 			}
 		}
 	}
