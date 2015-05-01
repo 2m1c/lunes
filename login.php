@@ -9,7 +9,6 @@
 	<div class="row marginTop20">
 
 		<div class="col-md-7 hidden-sm hidden-xs signResults">
-			<?php echo ( isset($result) ? $result : '' ); ?>
 <?php /*
 			<p>Helperdoc  doktorlar arasında etkin iletişim sağlayan yeni nesil sosyal ağdır.</p>
 			<p class="marginTop30">Doktorlara kendi aralarında güvenilir bilgi paylaşımı,<br />bu bilgileri depolama ve güvenilir bir şekilde<br />geleceğe taşıma konusunda yeni çözümler sunmaktadır.</p>
@@ -76,6 +75,20 @@ if($obj->val_3 == 1)
 					<p class="hidden-sm hidden-xs">Ücretsiz üyelik için formu doldurun</p>
 				</div>
 			</div>
+
+			<?php if( isset( $signup_result ) ) { ?>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-danger" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<span class="sr-only">Error:</span>
+						<?php echo $signup_result; ?>
+					</div>			
+				</div>
+			</div>
+			<?php } ?>
 
 			<div class="row marginTop20">
 				<div class="form-group">

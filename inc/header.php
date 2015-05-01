@@ -103,6 +103,20 @@
 
 	</div> <!-- /.row -->
 
+	<div class="row">
+		<div class="col-md-4 col-md-offset-7">
+			<?php if( isset($result) ) { ?>
+				<div class="alert alert-danger" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<span class="sr-only">Error:</span>
+					<?php echo $result; ?>
+				</div>
+				<?php } ?>
+		</div>
+	</div>
+
 </div> <!-- /.container -->
 
 </header> <!-- /.header -->

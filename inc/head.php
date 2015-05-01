@@ -20,6 +20,7 @@
 
 <script src="js/func.js"></script>
 <script src="js/jasny-bootstrap.js"></script>
+<script src="js/bootstrap.js"></script>
 
 <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/less.js/1.7.0/less.min.js"></script> -->
 <script src="js/less.js"></script>
