@@ -15,6 +15,7 @@ if($user_branch_amount <= 0) { ?>
 
 
 	<div class="fields">
+	<h4>Başlamaya Çok Az Kaldı!</h4>
 	<h3>Lütfen Takip Etmek İstediğiniz En Az Bir Alan Seçin</h3>
 <?php
 $query = $db->query("SELECT id, title, url FROM qwp_category WHERE `type` = 'branch' ORDER BY `title` ASC ");
