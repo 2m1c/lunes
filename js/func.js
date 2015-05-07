@@ -793,6 +793,7 @@ var $scrollAjax = (function() {
             data: { offset : offset, category : category},
             cache: false,
             success: function(data) {
+                
                 $resultContainer.append(data.html);
                 $resultContainer.data({'offset': data.offset});
             },
