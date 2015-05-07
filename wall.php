@@ -68,7 +68,7 @@ if(empty($branch_array)) { array_push($branch_array, 3); }
 $followed_bracnhes = implode(", ", $branch_array);
 
 
-$post_query = $db->query("SELECT * FROM gwp_posts WHERE `type` = 'branch_post' AND CASE WHEN `val_1` = '$user_id' THEN `status` IN (1,2) ELSE `status` = '1' END ORDER BY datetime DESC LIMIT 1, 3");
+$post_query = $db->query("SELECT * FROM gwp_posts WHERE `type` = 'branch_post' AND CASE WHEN `val_1` = '$user_id' THEN `status` IN (1,2) ELSE `status` = '1' END ORDER BY datetime DESC LIMIT 5 OFFSET 0");
 $gallery_no = 0;
 while ($post = $post_query->fetch(PDO::FETCH_OBJ)) {
 $gallery_no++;
@@ -176,7 +176,7 @@ $posted_branch  = '<a href="field.php?url='.$branch_url.'" class="postField"> <i
 
 				</div><!-- /.row -->
 
-				<div class="js-scroll-result" data-offset="3"> <!-- Ajax Here --> </div>
+				<div class="js-scroll-result" data-offset="2"> <!-- Ajax Here --> </div>
 				
 			    </section><!-- issuePanel -->
 <?php } ?>

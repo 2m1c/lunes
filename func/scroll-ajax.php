@@ -19,8 +19,8 @@ if(empty($branch_array)) { array_push($branch_array, 3); }
 $followed_bracnhes = implode(", ", $branch_array);
 
 
-$post_query = $db->query("SELECT * FROM `gwp_posts` WHERE `type` = 'branch_post' AND CASE WHEN `val_1` = '$user_id' THEN `status` IN (1,2) ELSE `status` = '1' END ORDER BY `datetime` DESC LIMIT 3 OFFSET $offset");
-$inc2 = 0;
+$post_query = $db->query("SELECT * FROM `gwp_posts` WHERE `type` = 'branch_post' AND CASE WHEN `val_1` = '$user_id' THEN `status` IN (1,2) ELSE `status` = '1' END ORDER BY `datetime` DESC LIMIT 5 OFFSET $offset");
+
 $gallery_no = 0;
 $post_count = $post_query->rowCount();
 if( $post_count >= 1 )
@@ -57,7 +57,7 @@ if($post->val_3 == 1)
         }
     }
 }
-$inc2++;
+
 // display post menu icon if the post belongs to the current user else display only archive option
 $visibility = ($post->status == 2 ? '<a href="?post_visibility='.$post_id.'&visibility=1">Gönderiyi Gizlemeyi Kaldır</a>' : '<a href="?post_visibility='.$post_id.'&visibility=2">Gönderiyi Gizle</a>');
 // if post is archived display remove option else display move archive option
@@ -68,7 +68,6 @@ $post_menu 	= ($post_sender == $user_id ? '<a href="#" class="postMenu js-displa
 $branch_name    = select_query("title", "qwp_category", "id = $post->val_2", "lower");
 $branch_url     = select_query("url", "qwp_category", "id = $post->val_2", "lower");
 $posted_branch  = '<a href="field.php?url='.$branch_url.'" class="postField"> <i class="fa fa-arrow-right"></i> <strong>'.$branch_name.'</strong> alanında bir gönderi paylaştı</a>';
-$html          	.= $inc2.' -- '.$post_id;
 $html 			.= '<div class="row">';
 $html 			.= '<div class="col-md-12 col-sm-12 col-xs-12 issuePanel">';
 $html 			.= '<a href="profile.php?url=general&profile_id='.$post_sender.'" class="pull-left">';
@@ -110,7 +109,7 @@ $html 			.= '</div><!-- /.col-md-10 -->';
 $html 			.= '</div><!-- /.row -->';							
 }
 
-$offset += 3;
+$offset += 5;
 }
 $json['html'] = $html;
 
