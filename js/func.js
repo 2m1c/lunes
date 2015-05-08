@@ -768,6 +768,7 @@ var $scrollAjax = (function() {
 
     scrollEvent  = function()
     {
+
         $document.scroll(function(){
             if($(window).scrollTop() + $(window).height() == $(document).height())
             {
@@ -796,6 +797,7 @@ var $scrollAjax = (function() {
                 
                 $resultContainer.append(data.html);
                 $resultContainer.data({'offset': data.offset});
+                $( '.swipebox' ).swipebox();
             },
             error: function()
             {
