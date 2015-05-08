@@ -9,7 +9,7 @@
 <?php
 // if user is not following any branch show all branches and hide wall
 $user_branch_amount = get_user_following_branch_amount($user_id);
-if($user_branch_amount <= 0) { ?>
+if($user_branch_amount <= 0 && $user_id != 0) { ?>
 				<div class="row">
 					<div class="col-md-7">
 

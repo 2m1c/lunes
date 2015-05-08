@@ -1,13 +1,20 @@
 <?php
-include_once("db.php");
-include_once("functions.php");
+include_once("../inc/db.php");
+include_once("../inc/functions.php");
 
 $commentData 	= $_POST['commentData'];
 $postId 		= $_POST['postId'];
 $postOwner 		= $_POST['postOwner'];
 
-$user_id 		= $_COOKIE['user_id'];
+$user_id 		= isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
 $date 			= date("Y-m-d H:i:s");
+
+if( $user_id == 0 )
+{
+	echo 'no-auth';
+	die;
+	exit;
+}
 
 if(empty($commentData))
 {
@@ -55,4 +62,3 @@ else
 		echo 0;
 	}
 }
-?>

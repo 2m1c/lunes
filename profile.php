@@ -3,6 +3,12 @@ include_once("inc/head.php");
 include_once("inc/class.upload.php");
 error_reporting(0);
 
+if( !isset($_COOKIE['user_id']) )
+{
+	header('Location: login.php');
+	exit();
+}
+
 //call these both functions to delete post or comment
 delete_post($_GET['post_delete']);
 delete_comment($_GET['comment_delete']);

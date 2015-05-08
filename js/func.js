@@ -4,7 +4,7 @@ $(function() {
 var $followBranch = (function(){
     //dom elements
     var $btn    = $(".js-follow-branch"),
-    href        = "inc/follow_branch.php",
+    href        = "func/follow_branch.php",
 
     // initalize fuction
     init        = function() {
@@ -19,20 +19,29 @@ var $followBranch = (function(){
             url: href,
             data: { branch_data:branch_data },
             success: function(data) {
-               if(data==1) {
+               
+                if(data == 'no-auth')
+                {
+                    alert('Takip etmek için üye girişi yapmanız gerekmetedir');
+                    window.location = 'login.php';
+                }
+                else if(data==1) {
                     elem
                         .removeClass("btn-follow")
                         .addClass("btn-unfollow")
                         .text("Takibi Bırak");
+                        // reload the page.
+                        location.reload(true);
                } else if(data==2) {
                     elem
                     .removeClass("btn-unfollow")
                     .addClass("btn-follow")
                     .html("Takip Et");
+                    // reload the page.
+                    location.reload(true);
                }
 
-               // reload the page.
-               location.reload(true);
+               
                
             }
         });
@@ -109,7 +118,7 @@ $ajaxkeyUpSearch.init();
 $postComment = (function(){
     
     var $commentBox = $(".js-post-comment"),
-    href        = "inc/post_comment.php",
+    href        = "func/post_comment.php",
 
     init        = function() {
         initEvents();
@@ -122,7 +131,12 @@ $postComment = (function(){
             url: href,
             data: { commentData : commentData, postId : postId, postOwner : postOwner },
             success: function(data) {
-                if(data == 0) {
+                if(data == 'no-auth')
+                {
+                    alert('Yorum yapmak için üye girişi yapmanız gerekmetedir');
+                    window.location = 'login.php';
+                }
+                else if(data == 0) {
                     alert("Yorum Gönderilemedi");
                 } else {
                     elem.parents(".js-commentsBoxlist").find(".js-comments").html(data);
@@ -291,7 +305,7 @@ $commentVote.init();
 // like comment
 $like       = (function(){
     var $likeBtn    = $(".js-like"),
-        href        = "inc/like.php",
+        href        = "func/like.php",
 
         init = function () {
             initEvents();
@@ -305,7 +319,12 @@ $like       = (function(){
                 url: href,
                 data: { itemId : itemId, itemType : itemType, postId : postId, object : object },
                 success: function(data) {
-                    if(data != false) {
+                    if(data == 'no-auth')
+                    {
+                        alert('Beğenmek için üye girişi yapmanız gerekmektedir');
+                        window.location = 'login.php';
+                    }
+                    else if(data != false) {
                         elem.html(data);
                     } else {
                         elem.html(elemHtml);

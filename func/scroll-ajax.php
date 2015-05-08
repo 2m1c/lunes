@@ -6,7 +6,7 @@ include_once("../inc/functions.php");
 // get parameters
 $offset 	= $_POST["offset"];
 $html 		= '';
-$user_id 	= $_COOKIE['user_id'];
+$user_id 	= isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
 
 $branches = get_user_following_branches($user_id);
 $branch_array = array();
@@ -61,7 +61,7 @@ if($post->val_3 == 1)
 // display post menu icon if the post belongs to the current user else display only archive option
 $visibility = ($post->status == 2 ? '<a href="?post_visibility='.$post_id.'&visibility=1">Gönderiyi Gizlemeyi Kaldır</a>' : '<a href="?post_visibility='.$post_id.'&visibility=2">Gönderiyi Gizle</a>');
 // if post is archived display remove option else display move archive option
-$file_id = get_an_user_archived_post($post_id, $user_id);
+$file_id 	= get_an_user_archived_post($post_id, $user_id);
 $archive    = ( $file_id != false ? '<li><a href="profile.php?url=posts&profile_id='.$user_id.'&folder_id='.$file_id.'">Bu Gönderi '.get_folder_name_by_id($file_id).' İsimli Arşivde</a></li><li><a href="profile.php?remove_post_from_archive='.$post_id.'">'.get_folder_name_by_id($file_id).' Arşivinden Kaldır</a></li>' : '<li><a href="profile.php?url=folder&profile_id='.$user_id.'&move_post='.$post_id.'">Arşive Taşı</a></li>' );
 $post_menu 	= ($post_sender == $user_id ? '<a href="#" class="postMenu js-display-item" data-show="js-postMenu" role="button"> <i class="fa fa-arrow-down"></i></a> <ul class="postMenuList js-postMenu">'.$archive.' <li> <a onClick="return confirm('."'Bu gönderiyi silmek istediğinizden emin misiniz?'".')" href="?post_delete='.$post_id.'">Gönderiyi Sil</a> </li> <li> '.$visibility.' </li></ul>' : '<a href="#" class="postMenu js-display-item" data-show="js-postMenu" role="button"> <i class="fa fa-arrow-down"></i></a> <ul class="postMenuList js-postMenu">'.$archive.'</ul>' );
 // which branch this post belong

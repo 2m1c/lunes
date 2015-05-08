@@ -1,6 +1,14 @@
 <?php
-include_once("db.php");
-include_once("functions.php");
+include_once("../inc/db.php");
+include_once("../inc/functions.php");
+
+$user_id    = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
+if( $user_id == 0 )
+{
+  echo 'no-auth';
+  die;
+  exit;
+}
 
 /*
  * önce insert ettir kullanıcı id ve comment id olsun
@@ -43,6 +51,3 @@ if($itemType == "comment") {
        return false;
    }
 }
-
-
-?>

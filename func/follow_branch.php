@@ -1,5 +1,13 @@
 <?php
-include_once("db.php");
+include_once("../inc/db.php");
+$user_id 		= isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
+if( $user_id == 0 )
+{
+	echo 'no-auth';
+	die;
+	exit;
+}
+
 /*
 	* following function in order to follow or unfollow a branch
 	* when user click on button, it post id of the branch via ajax

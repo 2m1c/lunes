@@ -9,10 +9,8 @@ if( isset($_GET['logout']) )
 		exit();
 	}
 }
-// if user is logged in, allow to execute following functions
-if( isset($_COOKIE['user_id']) )
-{
-	$user_id = $_COOKIE['user_id'];
+
+	$user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
 
 	// sef url
 	function seo($s) {
@@ -154,7 +152,7 @@ if( isset($_COOKIE['user_id']) )
 	function get_an_user_fullname($id, $case=false)
 	{
 		global $db;
-		$user_id = $_COOKIE['user_id'];
+		$user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
 		$query = $db->query("SELECT name,surname FROM gwp_users WHERE id = '$id'");
 		$obj = $query->fetch();
 		$result = $obj->name." ".$obj->surname;
@@ -471,7 +469,7 @@ if( isset($_COOKIE['user_id']) )
 	function following_status($id)
 	{
 		global $db;
-		$user_id = $_COOKIE['user_id'];
+		$user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
 
 		$query = $db->query("SELECT id FROM gwp_user_meta 
 							WHERE `post_id` = '$user_id' 
@@ -790,5 +788,5 @@ if( isset($_COOKIE['user_id']) )
 			}
 		}
 	}
-} //End: if condition
+
 ?>
