@@ -1,4 +1,47 @@
 <?php include_once("inc/head.php"); ?>
+
+<?php
+//login function
+if( isset($_POST['login']) )
+{
+	$email = $_POST['login_email'];
+	$password = md5($_POST['login_password']);
+	// push errors into this array
+	$errors = array();
+
+	if( empty($email) || empty($password) )
+	{
+		$errors[] = "Lütfen email ve şifrenizi giriniz";
+	}
+
+	if(!empty($errors))
+	{
+		foreach ($errors as $error) {
+			$result .= $error;
+		}
+	}
+	else
+	{
+
+		$query = $db->prepare("SELECT id, email, password FROM gwp_users WHERE email = :email AND password = :password");
+		$query->bindValue(':email', $email);
+		$query->bindValue(':password', $password);
+		$query->execute();
+		if( $query->rowCount() == 1 )
+		{
+			$obj = $query->fetch();
+			setcookie("user_id", $obj->id, time()+3600*24);
+			header("location: ./");
+		}
+		else
+		{
+			$result .= "E-posta adresiniz veya şifreniz hatalı";
+		}
+
+	}
+}
+?>
+
 <body class="loginPage">
 
 <?php include_once("inc/header.php"); ?>

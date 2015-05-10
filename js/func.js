@@ -128,7 +128,7 @@ $postComment = (function(){
         elem.attr("disabled", true);
         $.ajax({
             type: 'POST',
-            url: href,
+            url: "func/post_comment.php",
             data: { commentData : commentData, postId : postId, postOwner : postOwner },
             success: function(data) {
                 if(data == 'no-auth')
@@ -143,12 +143,13 @@ $postComment = (function(){
                     elem.val("");
                     elem.attr("disabled", false);
                 }
+                $like.init();
             }
         });
     },
 
     initEvents  = function() {
-        $commentBox.keydown(function(e){
+        $(".js-post-comment").keydown(function(e){
             
             if(e.which == 10 || e.which == 13) {
                 thisVal     = $(this).val(),
@@ -167,7 +168,7 @@ $postComment = (function(){
     return { init : init };
 
 })();
-$postComment.init();
+//$postComment.init();
 
 
 // post comment via ajax
@@ -184,7 +185,7 @@ $postDiagnosis = (function(){
         elem.attr("disabled", true);
         $.ajax({
             type: 'POST',
-            url: href,
+            url: "inc/post_diagnosis.php",
             data: { commentData : commentData, postId : postId },
             success: function(data) {
                 if(data == 0) {
@@ -200,7 +201,7 @@ $postDiagnosis = (function(){
     },
 
     initEvents  = function() {
-        $commentBox.keydown(function(e){
+        $(".js-post-diganosis").keydown(function(e){
             
             if(e.which == 10 || e.which == 13) {
                 var thisVal     = $(this).val(),
@@ -218,7 +219,7 @@ $postDiagnosis = (function(){
     return { init : init };
 
 })();
-$postDiagnosis.init();
+//$postDiagnosis.init();
 
 // post panel textarea action
 $postPanelTextarea = (function() {
@@ -316,7 +317,7 @@ $like       = (function(){
             elem.html("...");
             $.ajax({
                 type: 'POST',
-                url: href,
+                url: "func/like.php",
                 data: { itemId : itemId, itemType : itemType, postId : postId, object : object },
                 success: function(data) {
                     if(data == 'no-auth')
@@ -334,7 +335,7 @@ $like       = (function(){
         },
 
         initEvents  = function() {
-            $likeBtn.on('click',this,function(event){
+            $(".js-like").on('click',this,function(event){
                 event.preventDefault();
                 thisItemId = $(this).data("id");
                 thisItemType = $(this).data("type");
@@ -346,7 +347,7 @@ $like       = (function(){
 
     return { init : init };
 })();
-$like.init();
+//$like.init();
 
 //notification
 $notification = (function(){
@@ -817,6 +818,9 @@ var $scrollAjax = (function() {
                 $resultContainer.append(data.html);
                 $resultContainer.data({'offset': data.offset});
                 $( '.swipebox' ).swipebox();
+                $like.init();
+                $postComment.init();
+                $postDiagnosis.init();
             },
             error: function()
             {

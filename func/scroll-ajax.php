@@ -80,6 +80,7 @@ else
 $branch_name    = select_query("title", "qwp_category", "id = $post->val_2", "lower");
 $branch_url     = select_query("url", "qwp_category", "id = $post->val_2", "lower");
 $posted_branch  = '<a href="field.php?url='.$branch_url.'" class="postField"> <i class="fa fa-arrow-right"></i> <strong>'.$branch_name.'</strong> alanında bir gönderi paylaştı</a>';
+$html 			.= '<section class="issuePanelWrapper">';
 $html 			.= '<div class="row">';
 $html 			.= '<div class="col-md-12 col-sm-12 col-xs-12 issuePanel">';
 $html 			.= '<a href="profile.php?url=general&profile_id='.$post_sender.'" class="pull-left">';
@@ -113,12 +114,16 @@ $html 			.= get_post_comments($post_id);
 $html 			.= '</div>';
 $html 			.= '<div class="row marginTop10">';
 $html 			.= '<div class="col-md-12 col-sm-12 col-xs-12 commentPlace">';
-$html 			.= '<img src="'.get_current_user_image().'" />';
+if($user_id != 0)
+{
+	$html 			.= '<img src="'.get_current_user_image().'" />';
+}
 $html 			.= '<textarea data-post="'.$post_id.'" data-postowner="'.$post_sender.'" class="form-control js-post-comment" placeholder="yorumunuzu göndermek için enter tuşuna basınız"></textarea>';
 $html 			.= '</div><!-- /.col-md-2 -->';
 $html 			.= '</div><!-- /.row (commentPlace) -->';						
 $html 			.= '</div><!-- /.col-md-10 -->';
-$html 			.= '</div><!-- /.row -->';							
+$html 			.= '</div><!-- /.row -->';
+$html 			.= '</section><!-- issuePanel -->';							
 }
 
 $offset += 5;
