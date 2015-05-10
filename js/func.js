@@ -839,7 +839,7 @@ $scrollAjax.init();
 
 $(function(){
 // search box - search with ajax
-var $scrollAjax = (function() {
+var $searchAjax = (function() {
 
     var $input          = $('.js-search-box'),
         $target         = $('.js-search-result'),
@@ -898,5 +898,5 @@ var $scrollAjax = (function() {
     return { init : init };
 
 }) ();
-$scrollAjax.init();
+$searchAjax.init();
 });

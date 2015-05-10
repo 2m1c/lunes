@@ -18,9 +18,14 @@ while ($row = $branches->fetch(PDO::FETCH_OBJ)) {
 if(empty($branch_array)) { array_push($branch_array, 3); }
 $followed_bracnhes = implode(", ", $branch_array);
 
-
-$post_query = $db->query("SELECT * FROM `gwp_posts` WHERE `type` = 'branch_post' AND CASE WHEN `val_1` = '$user_id' THEN `status` IN (1,2) ELSE `status` = '1' END ORDER BY `datetime` DESC LIMIT 5 OFFSET $offset");
-
+if($user_id != 0) 
+{
+	$post_query = $db->query("SELECT * FROM `gwp_posts` WHERE `type` = 'branch_post' AND CASE WHEN `val_1` = '$user_id' THEN `status` IN (1,2) ELSE `status` = '1' END ORDER BY `datetime` DESC LIMIT 5 OFFSET $offset");
+}
+else
+{
+	$post_query = $db->query("SELECT * FROM `gwp_posts` WHERE `type` = 'branch_post' AND `status` = '1' ORDER BY `datetime` DESC LIMIT 5 OFFSET $offset");	
+}
 $gallery_no = 0;
 $post_count = $post_query->rowCount();
 if( $post_count >= 1 )
@@ -61,9 +66,16 @@ if($post->val_3 == 1)
 // display post menu icon if the post belongs to the current user else display only archive option
 $visibility = ($post->status == 2 ? '<a href="?post_visibility='.$post_id.'&visibility=1">Gönderiyi Gizlemeyi Kaldır</a>' : '<a href="?post_visibility='.$post_id.'&visibility=2">Gönderiyi Gizle</a>');
 // if post is archived display remove option else display move archive option
-$file_id 	= get_an_user_archived_post($post_id, $user_id);
-$archive    = ( $file_id != false ? '<li><a href="profile.php?url=posts&profile_id='.$user_id.'&folder_id='.$file_id.'">Bu Gönderi '.get_folder_name_by_id($file_id).' İsimli Arşivde</a></li><li><a href="profile.php?remove_post_from_archive='.$post_id.'">'.get_folder_name_by_id($file_id).' Arşivinden Kaldır</a></li>' : '<li><a href="profile.php?url=folder&profile_id='.$user_id.'&move_post='.$post_id.'">Arşive Taşı</a></li>' );
-$post_menu 	= ($post_sender == $user_id ? '<a href="#" class="postMenu js-display-item" data-show="js-postMenu" role="button"> <i class="fa fa-arrow-down"></i></a> <ul class="postMenuList js-postMenu">'.$archive.' <li> <a onClick="return confirm('."'Bu gönderiyi silmek istediğinizden emin misiniz?'".')" href="?post_delete='.$post_id.'">Gönderiyi Sil</a> </li> <li> '.$visibility.' </li></ul>' : '<a href="#" class="postMenu js-display-item" data-show="js-postMenu" role="button"> <i class="fa fa-arrow-down"></i></a> <ul class="postMenuList js-postMenu">'.$archive.'</ul>' );
+if($user_id != 0)
+{
+	$file_id 	= get_an_user_archived_post($post_id, $user_id);
+	$archive    = ( $file_id != false ? '<li><a href="profile.php?url=posts&profile_id='.$user_id.'&folder_id='.$file_id.'">Bu Gönderi '.get_folder_name_by_id($file_id).' İsimli Arşivde</a></li><li><a href="profile.php?remove_post_from_archive='.$post_id.'">'.get_folder_name_by_id($file_id).' Arşivinden Kaldır</a></li>' : '<li><a href="profile.php?url=folder&profile_id='.$user_id.'&move_post='.$post_id.'">Arşive Taşı</a></li>' );
+	$post_menu 	= ($post_sender == $user_id ? '<a href="#" class="postMenu js-display-item" data-show="js-postMenu" role="button"> <i class="fa fa-arrow-down"></i></a> <ul class="postMenuList js-postMenu">'.$archive.' <li> <a onClick="return confirm('."'Bu gönderiyi silmek istediğinizden emin misiniz?'".')" href="?post_delete='.$post_id.'">Gönderiyi Sil</a> </li> <li> '.$visibility.' </li></ul>' : '<a href="#" class="postMenu js-display-item" data-show="js-postMenu" role="button"> <i class="fa fa-arrow-down"></i></a> <ul class="postMenuList js-postMenu">'.$archive.'</ul>' );
+}
+else
+{
+	$post_menu = '';
+}
 // which branch this post belong
 $branch_name    = select_query("title", "qwp_category", "id = $post->val_2", "lower");
 $branch_url     = select_query("url", "qwp_category", "id = $post->val_2", "lower");
@@ -85,7 +97,7 @@ $html 			.= '<div>'.$post_img.'</div>';
 $html 			.= '<div class="clear"></div>';
 $html 			.= '<strong>Tanı:</strong>';
 $html			.= '<p class="js-diganosis">'.$post->val_text.'</p>';
-if($post_sender == $user_id)
+if($post_sender == $user_id && $user_id != 0)
 {
 	$html 		.= '<textarea data-post="'.$post_id.'" class="form-control js-post-diganosis" placeholder="Tanı yazdıktan sonra enter tuşuna basınız">'.$post->val_text.'</textarea>';
 }

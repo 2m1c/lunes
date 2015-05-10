@@ -134,17 +134,24 @@ if( isset($_GET['logout']) )
 	function get_current_user_image()
 	{
 		global $db;
-		$user_id = $_COOKIE['user_id'];
-		$query = $db->query("SELECT val_text FROM gwp_user_meta WHERE `group` = 'profile' AND `post_id` = '$user_id'");
-		$obj = $query->fetch();
-		$img = $obj->val_text;
-		if($img == false) 
+		$user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
+		if($user_id != 0)
+		{
+			$query = $db->query("SELECT val_text FROM gwp_user_meta WHERE `group` = 'profile' AND `post_id` = '$user_id'");
+			$obj = $query->fetch();
+			$img = $obj->val_text;
+			if($img == false) 
+			{
+				return "img/doctor.jpg";
+			}
+			else 
+			{
+				return $img;
+			}
+		}
+		else
 		{
 			return "img/doctor.jpg";
-		}
-		else 
-		{
-			return $img;
 		}
 	}
 
@@ -407,7 +414,7 @@ if( isset($_GET['logout']) )
 	function get_post_comments($post_id, $fullComments=false)
 	{
 		global $db;
-		$user_id = $_COOKIE['user_id'];
+		$user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
 		$comment = '';
 
 		if( $fullComments != false )
@@ -438,7 +445,7 @@ if( isset($_GET['logout']) )
 			$commenter_name 	= get_an_user_fullname($obj->val_int, "title");
 			$time_since_post 	= time_since_post($obj->val_date);
 
-			$comment_delete = ($obj->val_int == $user_id ? '<a onClick="return confirm('."'Bu yorumu silmek istediğinizden emin misiniz?'".')" href="?comment_delete='.$comment_id.'" class="deleteComment">X</a>' : '');
+			$comment_delete = ($obj->val_int == $user_id && $user_id != 0 ? '<a onClick="return confirm('."'Bu yorumu silmek istediğinizden emin misiniz?'".')" href="?comment_delete='.$comment_id.'" class="deleteComment">X</a>' : '');
 			$star_color 	= ($obj->val_8 == 1 ? 'yellow' : 'dark');
 			$comment_star 	= ($obj->val_9 == $user_id ? '<a href="#" role="button" class="js-vote commentStar" data-id="'.$comment_id.'"><i class="fa fa-star '.$star_color.'"></i></a>' :  ($obj->val_8 == 1 ? '<a href="" role="button" class="commentStar" data-id="'.$comment_id.'"><i class="fa fa-star '.$star_color.'"></i></a>' : '' ) );
 

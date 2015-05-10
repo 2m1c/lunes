@@ -181,8 +181,6 @@ $posted_branch  = '<a href="field.php?url='.$branch_url.'" class="postField"> <i
 			    </section><!-- issuePanel -->
 <?php } ?>
 
-			
-
 		</div><!-- /.col-md-8 -->
 
 		<?php include_once('inc/sidebar.php'); ?>
