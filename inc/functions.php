@@ -10,10 +10,11 @@ if( isset($_GET['logout']) )
 	}
 }
 // if user is logged in, allow to execute following functions
+$user_id = 0;
 if( isset($_COOKIE['user_id']) )
 {
 	$user_id = $_COOKIE['user_id'];
-
+}
 	// sef url
 	function seo($s) {
 		$tr = array('ş','Ş','ı','I','İ','ğ','Ğ','ü','Ü','ö','Ö','Ç','ç','(',')','/',':',',');
@@ -50,24 +51,31 @@ if( isset($_COOKIE['user_id']) )
 
 		global $db;
 		$select_query = $db->query("SELECT $data FROM $table WHERE $where");
-		$query = $select_query->fetch();
-		if($case == "upper")
+		if( $select_query->rowCount() > 0 )
 		{
-			$obj = $query->$data;
-			return mb_convert_case($obj, MB_CASE_UPPER, "UTF-8");
-		} elseif($case == "title")
-		{
-			$obj = $query->$data;
-			return mb_convert_case($obj, MB_CASE_TITLE, "UTF-8");
-		}
-		elseif($case == "lower")
-		{
-			$obj = $query->$data;
-			return mb_convert_case($obj, MB_CASE_LOWER, "UTF-8");
+			$query = $select_query->fetch();
+			if($case == "upper")
+			{
+				$obj = $query->$data;
+				return mb_convert_case($obj, MB_CASE_UPPER, "UTF-8");
+			} elseif($case == "title")
+			{
+				$obj = $query->$data;
+				return mb_convert_case($obj, MB_CASE_TITLE, "UTF-8");
+			}
+			elseif($case == "lower")
+			{
+				$obj = $query->$data;
+				return mb_convert_case($obj, MB_CASE_LOWER, "UTF-8");
+			}
+			else
+			{
+				return $query->$data;
+			}
 		}
 		else
 		{
-			return $query->$data;
+			return false;
 		}
 	}
 
@@ -136,7 +144,7 @@ if( isset($_COOKIE['user_id']) )
 	function get_current_user_image()
 	{
 		global $db;
-		$user_id = $_COOKIE['user_id'];
+		$user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
 		$query = $db->query("SELECT val_text FROM gwp_user_meta WHERE `group` = 'profile' AND `post_id` = '$user_id'");
 		$obj = $query->fetch();
 		$img = $obj->val_text;
@@ -154,27 +162,34 @@ if( isset($_COOKIE['user_id']) )
 	function get_an_user_fullname($id, $case=false)
 	{
 		global $db;
-		$user_id = $_COOKIE['user_id'];
+		$user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
 		$query = $db->query("SELECT name,surname FROM gwp_users WHERE id = '$id'");
-		$obj = $query->fetch();
-		$result = $obj->name." ".$obj->surname;
-		if($case == "upper")
+		if( $query->rowCount() > 0 )
 		{
+			$obj = $query->fetch();
 			$result = $obj->name." ".$obj->surname;
-			return mb_convert_case($result, MB_CASE_UPPER, "UTF-8");
-		} elseif($case == "title")
-		{
-			$result = $obj->name." ".$obj->surname;
-			return mb_convert_case($result, MB_CASE_TITLE, "UTF-8");
-		}
-		elseif($case == "lower")
-		{
-			$result = $obj->name." ".$obj->surname;
-			return mb_convert_case($result, MB_CASE_LOWER, "UTF-8");
+			if($case == "upper")
+			{
+				$result = $obj->name." ".$obj->surname;
+				return mb_convert_case($result, MB_CASE_UPPER, "UTF-8");
+			} elseif($case == "title")
+			{
+				$result = $obj->name." ".$obj->surname;
+				return mb_convert_case($result, MB_CASE_TITLE, "UTF-8");
+			}
+			elseif($case == "lower")
+			{
+				$result = $obj->name." ".$obj->surname;
+				return mb_convert_case($result, MB_CASE_LOWER, "UTF-8");
+			}
+			else
+			{
+				return $result = $obj->name." ".$obj->surname;
+			}
 		}
 		else
 		{
-			return $result = $obj->name." ".$obj->surname;
+			return false;
 		}
 	}
 
@@ -202,7 +217,7 @@ if( isset($_COOKIE['user_id']) )
     function get_an_user_archived_post($param_a, $param_b) {
         global $db;
         $query = $db->query("SELECT `val_2` FROM `gwp_user_meta` WHERE `post_id` = '$param_b' AND `group` = 'archived_post' AND `val_1` = '$param_a'");
-        if($query) {
+        if($query->rowCount() > 0) {
             $obj = $query->fetch();
             $file_id = $obj->val_2;
             return $file_id;
@@ -409,7 +424,7 @@ if( isset($_COOKIE['user_id']) )
 	function get_post_comments($post_id, $fullComments=false)
 	{
 		global $db;
-		$user_id = $_COOKIE['user_id'];
+		$user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
 		$comment = '';
 
 		if( $fullComments != false )
@@ -440,7 +455,7 @@ if( isset($_COOKIE['user_id']) )
 			$commenter_name 	= get_an_user_fullname($obj->val_int, "title");
 			$time_since_post 	= time_since_post($obj->val_date);
 
-			$comment_delete = ($obj->val_int == $user_id ? '<a onClick="return confirm('."'Bu yorumu silmek istediğinizden emin misiniz?'".')" href="?comment_delete='.$comment_id.'" class="deleteComment">X</a>' : '');
+			$comment_delete = ($obj->val_int == $user_id ? '<a onClick="return confirm('."'Bu yorumu silmek istediğinizden emin misiniz?'".')" href="delete_comment.php?comment_delete='.$comment_id.'" class="deleteComment">X</a>' : '');
 			$star_color 	= ($obj->val_8 == 1 ? 'yellow' : 'dark');
 			$comment_star 	= ($obj->val_9 == $user_id ? '<a href="#" role="button" class="js-vote commentStar" data-id="'.$comment_id.'"><i class="fa fa-star '.$star_color.'"></i></a>' :  ($obj->val_8 == 1 ? '<a href="" role="button" class="commentStar" data-id="'.$comment_id.'"><i class="fa fa-star '.$star_color.'"></i></a>' : '' ) );
 
@@ -790,5 +805,5 @@ if( isset($_COOKIE['user_id']) )
 			}
 		}
 	}
-} //End: if condition
+
 ?>

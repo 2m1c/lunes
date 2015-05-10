@@ -3,6 +3,14 @@ include_once("inc/class.upload.php");
 error_reporting(0);
 if(isset($_POST['save']))
 {
+	$user_id 		= isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
+	if( $user_id == 0 )
+	{
+		echo "<script>alert('Gönderi yapmak için üye girişi yapmanız gerekmektedir.'); window.location = 'login.php';</script>";
+		die;
+		exit;
+	}
+
 	$issue 	= $_POST['issue'];
 	$branch = $_POST['branch'];
 	$archive= $_POST['archive'];

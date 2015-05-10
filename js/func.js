@@ -4,7 +4,7 @@ $(function() {
 var $followBranch = (function(){
     //dom elements
     var $btn    = $(".js-follow-branch"),
-    href        = "inc/follow_branch.php",
+    href        = "func/follow_branch.php",
 
     // initalize fuction
     init        = function() {
@@ -19,20 +19,29 @@ var $followBranch = (function(){
             url: href,
             data: { branch_data:branch_data },
             success: function(data) {
-               if(data==1) {
+               
+                if(data == 'no-auth')
+                {
+                    alert('Takip etmek için üye girişi yapmanız gerekmetedir');
+                    window.location = 'login.php';
+                }
+                else if(data==1) {
                     elem
                         .removeClass("btn-follow")
                         .addClass("btn-unfollow")
                         .text("Takibi Bırak");
+                        // reload the page.
+                        location.reload(true);
                } else if(data==2) {
                     elem
                     .removeClass("btn-unfollow")
                     .addClass("btn-follow")
                     .html("Takip Et");
+                    // reload the page.
+                    location.reload(true);
                }
 
-               // reload the page.
-               location.reload(true);
+               
                
             }
         });
@@ -109,7 +118,7 @@ $ajaxkeyUpSearch.init();
 $postComment = (function(){
     
     var $commentBox = $(".js-post-comment"),
-    href        = "inc/post_comment.php",
+    href        = "func/post_comment.php",
 
     init        = function() {
         initEvents();
@@ -119,22 +128,28 @@ $postComment = (function(){
         elem.attr("disabled", true);
         $.ajax({
             type: 'POST',
-            url: href,
+            url: "func/post_comment.php",
             data: { commentData : commentData, postId : postId, postOwner : postOwner },
             success: function(data) {
-                if(data == 0) {
+                if(data == 'no-auth')
+                {
+                    alert('Yorum yapmak için üye girişi yapmanız gerekmetedir');
+                    window.location = 'login.php';
+                }
+                else if(data == 0) {
                     alert("Yorum Gönderilemedi");
                 } else {
                     elem.parents(".js-commentsBoxlist").find(".js-comments").html(data);
                     elem.val("");
                     elem.attr("disabled", false);
                 }
+                $like.init();
             }
         });
     },
 
     initEvents  = function() {
-        $commentBox.keydown(function(e){
+        $(".js-post-comment").keydown(function(e){
             
             if(e.which == 10 || e.which == 13) {
                 thisVal     = $(this).val(),
@@ -153,7 +168,7 @@ $postComment = (function(){
     return { init : init };
 
 })();
-$postComment.init();
+//$postComment.init();
 
 
 // post comment via ajax
@@ -170,7 +185,7 @@ $postDiagnosis = (function(){
         elem.attr("disabled", true);
         $.ajax({
             type: 'POST',
-            url: href,
+            url: "inc/post_diagnosis.php",
             data: { commentData : commentData, postId : postId },
             success: function(data) {
                 if(data == 0) {
@@ -186,7 +201,7 @@ $postDiagnosis = (function(){
     },
 
     initEvents  = function() {
-        $commentBox.keydown(function(e){
+        $(".js-post-diganosis").keydown(function(e){
             
             if(e.which == 10 || e.which == 13) {
                 var thisVal     = $(this).val(),
@@ -204,7 +219,7 @@ $postDiagnosis = (function(){
     return { init : init };
 
 })();
-$postDiagnosis.init();
+//$postDiagnosis.init();
 
 // post panel textarea action
 $postPanelTextarea = (function() {
@@ -291,7 +306,7 @@ $commentVote.init();
 // like comment
 $like       = (function(){
     var $likeBtn    = $(".js-like"),
-        href        = "inc/like.php",
+        href        = "func/like.php",
 
         init = function () {
             initEvents();
@@ -302,10 +317,15 @@ $like       = (function(){
             elem.html("...");
             $.ajax({
                 type: 'POST',
-                url: href,
+                url: "func/like.php",
                 data: { itemId : itemId, itemType : itemType, postId : postId, object : object },
                 success: function(data) {
-                    if(data != false) {
+                    if(data == 'no-auth')
+                    {
+                        alert('Beğenmek için üye girişi yapmanız gerekmektedir');
+                        window.location = 'login.php';
+                    }
+                    else if(data != false) {
                         elem.html(data);
                     } else {
                         elem.html(elemHtml);
@@ -315,7 +335,7 @@ $like       = (function(){
         },
 
         initEvents  = function() {
-            $likeBtn.on('click',this,function(event){
+            $(".js-like").on('click',this,function(event){
                 event.preventDefault();
                 thisItemId = $(this).data("id");
                 thisItemType = $(this).data("type");
@@ -327,7 +347,7 @@ $like       = (function(){
 
     return { init : init };
 })();
-$like.init();
+//$like.init();
 
 //notification
 $notification = (function(){
@@ -768,6 +788,7 @@ var $scrollAjax = (function() {
 
     scrollEvent  = function()
     {
+
         $document.scroll(function(){
             if($(window).scrollTop() + $(window).height() == $(document).height())
             {
@@ -796,6 +817,10 @@ var $scrollAjax = (function() {
                 
                 $resultContainer.append(data.html);
                 $resultContainer.data({'offset': data.offset});
+                $( '.swipebox' ).swipebox();
+                $like.init();
+                $postComment.init();
+                $postDiagnosis.init();
             },
             error: function()
             {
@@ -818,7 +843,7 @@ $scrollAjax.init();
 
 $(function(){
 // search box - search with ajax
-var $scrollAjax = (function() {
+var $searchAjax = (function() {
 
     var $input          = $('.js-search-box'),
         $target         = $('.js-search-result'),
@@ -877,5 +902,5 @@ var $scrollAjax = (function() {
     return { init : init };
 
 }) ();
-$scrollAjax.init();
+$searchAjax.init();
 });
