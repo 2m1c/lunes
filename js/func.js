@@ -784,6 +784,10 @@ var $scrollAjax = (function() {
     init        = function() 
     {
         initEvents();
+        $( '.swipebox' ).swipebox();
+        $like.init();
+        $postComment.init();
+        $postDiagnosis.init();
     },
 
     scrollEvent  = function()
